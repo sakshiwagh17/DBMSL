@@ -1,0 +1,264 @@
+use college;
+switched to db college
+db.createCollection("student");
+{ ok: 1 }
+db.student.insert([{roll_no:1,name:"sakshi",marks:98,hobbies:["singing","dancing","drawing"]},{roll_no:2,name:"sayali",marks:90,hobbies:"singing"},{roll_no:3,name:"aditya",marks:89,hobbies:["dancing","singing"]},{roll_no:4,name:"priya",marks:80,hobbies:"drawing"}]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67225d7a33a4c801717d8960'),
+    '1': ObjectId('67225d7a33a4c801717d8961'),
+    '2': ObjectId('67225d7a33a4c801717d8962'),
+    '3': ObjectId('67225d7a33a4c801717d8963')
+  }
+}
+db.student.find().pretty();
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8963'),
+  roll_no: 4,
+  name: 'priya',
+  marks: 80,
+  hobbies: 'drawing'
+}
+db.student.find({roll_no:3});
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+db.student.find({name:"aditya"});
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+db.student.find({marks:{$gt:90}});
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+db.student.find({marks:{$gt:80,$lt:90}});
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+db.student.find().sort({roll_no:1});
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8963'),
+  roll_no: 4,
+  name: 'priya',
+  marks: 80,
+  hobbies: 'drawing'
+}
+db.student.find().sort({marks:1});
+{
+  _id: ObjectId('67225d7a33a4c801717d8963'),
+  roll_no: 4,
+  name: 'priya',
+  marks: 80,
+  hobbies: 'drawing'
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+db.student.find().sort({marks:-1});
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8962'),
+  roll_no: 3,
+  name: 'aditya',
+  marks: 89,
+  hobbies: [
+    'dancing',
+    'singing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8963'),
+  roll_no: 4,
+  name: 'priya',
+  marks: 80,
+  hobbies: 'drawing'
+}
+db.student.find().count();
+4
+db.student.find().limit(2);
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
+db.student.find().skip(4);
+db.student.find().skip(3);
+{
+  _id: ObjectId('67225d7a33a4c801717d8963'),
+  roll_no: 4,
+  name: 'priya',
+  marks: 80,
+  hobbies: 'drawing'
+}
+db.student.find({name:{$eq:"sakshi"}});
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+db.student.find({marks:{$gte:90}});
+{
+  _id: ObjectId('67225d7a33a4c801717d8960'),
+  roll_no: 1,
+  name: 'sakshi',
+  marks: 98,
+  hobbies: [
+    'singing',
+    'dancing',
+    'drawing'
+  ]
+}
+{
+  _id: ObjectId('67225d7a33a4c801717d8961'),
+  roll_no: 2,
+  name: 'sayali',
+  marks: 90,
+  hobbies: 'singing'
+}
