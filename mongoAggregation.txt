@@ -1,0 +1,217 @@
+db.createCollection("employee")
+{ ok: 1 }
+db.employee.insert([{emp_id:1,emp_name:"sakshi",dept_name:"COMP",salary:20000,gender:"female"},
+    {emp_id:2,emp_name:"sayali",dept_name:"COMP",salary:40000,gender:"female"},
+    {emp_id:3,emp_name:"adii",dept_name:"IT",salary:30000,gender:"male"},
+    {emp_id:4,emp_name:"abhi",dept_name:"IT",salary:40000,gender:"male"},
+    {emp_id:5,emp_name:"priya",dept_name:"ENTC",salary:40000,gender:"female"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67250b5767039025a2003c32'),
+    '1': ObjectId('67250b5767039025a2003c33'),
+    '2': ObjectId('67250b5767039025a2003c34'),
+    '3': ObjectId('67250b5767039025a2003c35'),
+    '4': ObjectId('67250b5767039025a2003c36')
+  }
+}
+db.employee.find().pretty();
+{
+  _id: ObjectId('67250b5767039025a2003c32'),
+  emp_id: 1,
+  emp_name: 'sakshi',
+  dept_name: 'COMP',
+  salary: 20000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c33'),
+  emp_id: 2,
+  emp_name: 'sayali',
+  dept_name: 'COMP',
+  salary: 40000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c34'),
+  emp_id: 3,
+  emp_name: 'adii',
+  dept_name: 'IT',
+  salary: 30000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c35'),
+  emp_id: 4,
+  emp_name: 'abhi',
+  dept_name: 'IT',
+  salary: 40000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c36'),
+  emp_id: 5,
+  emp_name: 'priya',
+  dept_name: 'ENTC',
+  salary: 40000,
+  gender: 'female'
+}
+
+db.employee.aggregate([{$group:{_id:"$dept_name",total_emp:{$sum:1}}}])
+{
+  _id: 'IT',
+  total_emp: 2
+}
+{
+  _id: 'ENTC',
+  total_emp: 1
+}
+{
+  _id: 'COMP',
+  total_emp: 2
+}
+db.employee.aggregate([{$group:{_id:"$dept_name",total_salary:{$sum:"$salary"}}}])
+{
+  _id: 'IT',
+  total_salary: 70000
+}
+{
+  _id: 'COMP',
+  total_salary: 60000
+}
+{
+  _id: 'ENTC',
+  total_salary: 40000
+}
+
+db.employee.aggregate([{$match:{gender:"female"}},{$group:{_id:"$dept_name",total_salary:{$sum:"$salary"}}}])
+{
+  _id: 'COMP',
+  total_salary: 60000
+}
+{
+  _id: 'ENTC',
+  total_salary: 40000
+}
+db.employee.aggregate([{$match:{gender:"male"}},{$group:{_id:"$dept_name",total_salary:{$sum:"$salary"}}}])
+{
+  _id: 'IT',
+  total_salary: 70000
+}
+db.employee.aggregate([{$match:{gender:"female"}},{$group:{_id:"$dept_name",total_emp:{$sum:1}}}])
+{
+  _id: 'COMP',
+  total_emp: 2
+}
+{
+  _id: 'ENTC',
+  total_emp: 1
+}
+db.employee.aggregate([{$match:{gender:"female"}},{$group:{_id:null,total_emp:{$sum:1}}}])
+{
+  _id: null,
+  total_emp: 3
+}
+db.employee.aggregate([{$match:{gender:"female"}},{$group:{_id:null,min_salary:{$min:"$salary"}}}])
+{
+  _id: null,
+  min_salary: 20000
+}
+db.employee.aggregate([{$match:{gender:"male"}},{$group:{_id:null,max_salary:{$max:"$salary"}}}])
+{
+  _id: null,
+  max_salary: 40000
+}
+db.employee.aggregate([{$sort:{emp_name:1}}])
+{
+  _id: ObjectId('67250b5767039025a2003c35'),
+  emp_id: 4,
+  emp_name: 'abhi',
+  dept_name: 'IT',
+  salary: 40000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c34'),
+  emp_id: 3,
+  emp_name: 'adii',
+  dept_name: 'IT',
+  salary: 30000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c36'),
+  emp_id: 5,
+  emp_name: 'priya',
+  dept_name: 'ENTC',
+  salary: 40000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c32'),
+  emp_id: 1,
+  emp_name: 'sakshi',
+  dept_name: 'COMP',
+  salary: 20000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c33'),
+  emp_id: 2,
+  emp_name: 'sayali',
+  dept_name: 'COMP',
+  salary: 40000,
+  gender: 'female'
+}
+db.employee.aggregate([{$sort:{emp_name:-1}}])
+{
+  _id: ObjectId('67250b5767039025a2003c33'),
+  emp_id: 2,
+  emp_name: 'sayali',
+  dept_name: 'COMP',
+  salary: 40000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c32'),
+  emp_id: 1,
+  emp_name: 'sakshi',
+  dept_name: 'COMP',
+  salary: 20000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c36'),
+  emp_id: 5,
+  emp_name: 'priya',
+  dept_name: 'ENTC',
+  salary: 40000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c34'),
+  emp_id: 3,
+  emp_name: 'adii',
+  dept_name: 'IT',
+  salary: 30000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c35'),
+  emp_id: 4,
+  emp_name: 'abhi',
+  dept_name: 'IT',
+  salary: 40000,
+  gender: 'male'
+}
+db.employee.createIndex({salary:20000})
+salary_20000
+db.employee.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { salary: 20000 }, name: 'salary_20000' }
+]
+db.employee.dropIndex({salary:20000})
+{ nIndexesWas: 2, ok: 1 }
+
+
