@@ -1,0 +1,79 @@
+db.employee.find().pretty()
+{
+  _id: ObjectId('67250b5767039025a2003c32'),
+  emp_id: 1,
+  emp_name: 'sakshi',
+  dept_name: 'COMP',
+  salary: 20000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c33'),
+  emp_id: 2,
+  emp_name: 'sayali',
+  dept_name: 'COMP',
+  salary: 40000,
+  gender: 'female'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c34'),
+  emp_id: 3,
+  emp_name: 'adii',
+  dept_name: 'IT',
+  salary: 30000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c35'),
+  emp_id: 4,
+  emp_name: 'abhi',
+  dept_name: 'IT',
+  salary: 40000,
+  gender: 'male'
+}
+{
+  _id: ObjectId('67250b5767039025a2003c36'),
+  emp_id: 5,
+  emp_name: 'priya',
+  dept_name: 'ENTC',
+  salary: 40000,
+  gender: 'female'
+}
+
+*******************MAPREDUCE FUNCTION****************
+
+var mapfun=function() {emit(this.dept_name,this.salary)}
+var reducefun=function(key,values) {return Array.sum(values)}
+db.employee.mapReduce(mapfun,reducefun,{"out":"emp"})
+{ result: 'emp', ok: 1 }
+db.emp.find()
+{
+  _id: 'COMP',
+  value: 60000
+}
+{
+  _id: 'ENTC',
+  value: 40000
+}
+{
+  _id: 'IT',
+  value: 70000
+}
+var reducefun=function(key,values) {return Array.avg(values)}
+db.employee.mapReduce(mapfun,reducefun,{"out":"emp"})
+{ result: 'emp', ok: 1 }
+db.emp.find()
+{
+  _id: 'COMP',
+  value: 30000
+}
+{
+  _id: 'ENTC',
+  value: 40000
+}
+{
+  _id: 'IT',
+  value: 35000
+}
+
+
